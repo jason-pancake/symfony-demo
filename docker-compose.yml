@@ -1,0 +1,42 @@
+version: "3.2"
+services:
+    mailhog:
+      image: mailhog/mailhog
+      ports:
+          - "8025:8025"
+
+    postgres:
+      image: postgres:10.7
+      environment:
+        POSTGRES_USER: dev
+        POSTGRES_PASSWORD: dev
+        POSTGRES_DB: dev
+
+    php:
+        working_dir: /app
+        build:
+          context: ./.docker/php-fpm
+          args:
+            ENV: dev
+        volumes:
+          - ./app:/app:cached
+          - var:/app/var
+        links:
+          - mailhog
+          - postgres
+        environment:
+          XDEBUG_CONFIG: "remote_host=172.17.0.1 idekey=PHPSTORM remote_autostart=On remote_enable=On default_enable=On"
+
+    web:
+        image: nginx:latest
+        volumes:
+          - ./.docker/nginx:/etc/nginx/conf.d
+          - ./app:/app:cached
+          - var:/app/var
+        ports:
+          - "8080:80"
+        links:
+          - php
+
+volumes:
+    var:

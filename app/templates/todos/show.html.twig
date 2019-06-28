@@ -1,0 +1,12 @@
+{% extends 'default.html.twig' %}
+
+{% block title %}{{ todo.name }} | Todos{% endblock %}
+
+{% block main %}
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h1 class="mb-3">Todo Details</h1>
+            {{ todo.name }}
+        </div>
+    </div>
+{% endblock %}

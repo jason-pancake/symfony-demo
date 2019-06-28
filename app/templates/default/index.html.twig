@@ -1,0 +1,11 @@
+{% extends 'default.html.twig' %}
+
+{% block title %}Welcome to the Symfony demo!{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <h1>Welcome to the Symfony demo, <b>{{ app.user.firstName }}!</b></h1>
+        </div>
+    </div>
+{% endblock %}
